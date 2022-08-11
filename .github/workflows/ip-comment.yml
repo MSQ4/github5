@@ -13,7 +13,7 @@ jobs:
        
          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        run: |
-        export body=$(https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m)
+        export body=$(curl https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m)
         export ip-weather=$(echo $body | jq '.ip-weather')
         export country=$(echo $body | jq '.country')
          gh pr comment $PR_NUMBER --body "This was run from weather: $ip-weather located at $country" --repo $GITHUB_REPOSITORY
