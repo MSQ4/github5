@@ -13,7 +13,7 @@ jobs:
        
          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        run: |
-        export body=$(curl ifcanfig.co/json)
-        export ip-weather=$(echo $body | jq '.ip')
-        export country=$(echo $body | jq '.country')
-         gh pr comment $PR_NUMBER --body "This was run from weather: $ip-weather located at $country" --repo $GITHUB_REPOSITORY
+        export body=$(curl 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current_weather=true')
+        export timezone=$(echo $body | jq '.timezone')
+        export temperature=$(echo $body | jq '.current_weather.temperature')
+        gh pr comment $PR_NUMBER --body "In $timezone Country/city, the temperature $temperature" --repo $GITHUB_REPOSITORY
